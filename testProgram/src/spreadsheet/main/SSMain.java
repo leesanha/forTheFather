@@ -1,0 +1,10 @@
+package spreadsheet.main;
+
+import spreadsheet.view.SpreadStage;
+
+public class SSMain {
+	public static void main(String[] args) {
+		SpreadStage stage = new SpreadStage("Excel viewer");
+	}
+
+}
