@@ -3,18 +3,14 @@ package spreadsheet.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellType;
 
 /**
  * <pre>
@@ -72,38 +68,38 @@ public class ExcelManagerXLS {
 		int maxNum = row.getLastCellNum();
 //		System.out.println(maxNum);
 		for (int i = 0; i < maxNum; i++) {
-			hMap.put("attr" + i, getStringCellData(row.getCell(i)));
+			hMap.put("attr" + i, getStringCellData(row.getCell((short) i)));
 		}
 		return hMap;
 	}
 
 	private String getStringCellData(HSSFCell cell) {
 		DecimalFormat df = new DecimalFormat();
-		HSSFFormulaEvaluator evaluator = new HSSFWorkbook().getCreationHelper().createFormulaEvaluator();
+//		HSSFFormulaEvaluator evaluator = new HSSFWorkbook().getCreationHelper().createFormulaEvaluator();
 		
 		if (cell != null) {
 			String data = null;
 //			System.out.println(cell.getCellType());
 			switch (cell.getCellType()) {
-			case BOOLEAN:
+			case HSSFCell.CELL_TYPE_BOOLEAN:
 				boolean bdata = cell.getBooleanCellValue();
 				data = String.valueOf(bdata);
 				break;
-			case NUMERIC:
-				if (HSSFDateUtil.isCellDateFormatted(cell)) {
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-					data = formatter.format(cell.getDateCellValue());
-				} else {
+			case HSSFCell.CELL_TYPE_NUMERIC:
+//				if (HSSFDateUtil.isCellDateFormatted(cell)) {
+////					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//					data = formatter.format(cell.getDateCellValue());
+//				} else {
 					double ddata = cell.getNumericCellValue();
 					data = df.format(ddata);
-				}
+//				}
 				break;
-			case STRING:
+			case HSSFCell.CELL_TYPE_STRING:
 				data = cell.toString();
 				break;
-			case BLANK:
-			case ERROR:
-			case FORMULA:
+			case HSSFCell.CELL_TYPE_BLANK:
+			case HSSFCell.CELL_TYPE_ERROR:
+			case HSSFCell.CELL_TYPE_FORMULA:
 				if (!(cell.toString() == "")) {
 //					if (evaluator.evaluateFormulaCell(cell) == CellType.NUMERIC) {
 

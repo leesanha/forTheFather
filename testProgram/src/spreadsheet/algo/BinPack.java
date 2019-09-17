@@ -70,17 +70,17 @@ public class BinPack {
 				}
 			}
 		}
-		for (int i = 0; i < bins.length; i++) {
-			if (bins[i] == null)
-				break;
-			System.out.print(i + ": " + "남은 길이: " + bins[i].get(0) + ", ");
-
-			for (int j = 1; j < bins[i].size(); j++) // j==0은 남은 길이
-			{
-				System.out.print(bins[i].get(j) + " ");
-			}
-			System.out.println();
-		}
+//		for (int i = 0; i < bins.length; i++) {
+//			if (bins[i] == null)
+//				break;
+//			System.out.print(i + ": " + "남은 길이: " + bins[i].get(0) + ", ");
+//
+//			for (int j = 1; j < bins[i].size(); j++) // j==0은 남은 길이
+//			{
+//				System.out.print(bins[i].get(j) + " ");
+//			}
+//			System.out.println();
+//		}
 		
 		return bins; 
 	}

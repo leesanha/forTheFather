@@ -3,15 +3,11 @@ package spreadsheet.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -81,7 +77,7 @@ public class ExcelManagerXLSX {
 
 	private String getStringCellData(XSSFCell xssfCell) {
 		DecimalFormat df = new DecimalFormat();
-		XSSFFormulaEvaluator evaluator = new XSSFWorkbook().getCreationHelper().createFormulaEvaluator();
+//		XSSFFormulaEvaluator evaluator = new XSSFWorkbook().getCreationHelper().createFormulaEvaluator();
 		if (xssfCell != null) {
 			String data = null;
 			switch (xssfCell.getCellType()) {
@@ -90,13 +86,13 @@ public class ExcelManagerXLSX {
 				data = String.valueOf(bdata);
 				break;
 			case NUMERIC:
-				if (HSSFDateUtil.isCellDateFormatted(xssfCell)) {
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-					data = formatter.format(xssfCell.getDateCellValue());
-				} else {
+//				if (XSSFDateUtil.isCellDateFormatted(xssfCell)) {
+//					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//					data = formatter.format(xssfCell.getDateCellValue());
+//				} else {
 					double ddata = xssfCell.getNumericCellValue();
 					data = df.format(ddata);
-				}
+//				}
 				break;
 			case STRING:
 				data = xssfCell.toString();

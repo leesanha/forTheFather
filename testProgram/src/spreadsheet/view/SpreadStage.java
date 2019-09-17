@@ -51,6 +51,8 @@ public class SpreadStage extends JFrame {
 		initMenuBar();
 		initBody();
 		this.setVisible(true);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	void initMenuBar() {

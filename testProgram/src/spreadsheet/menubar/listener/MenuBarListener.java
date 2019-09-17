@@ -2,14 +2,19 @@ package spreadsheet.menubar.listener;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -39,7 +44,6 @@ public class MenuBarListener implements ActionListener {
 
 	Container contentPane;
 	public JTable table;
-	String[] colNames = {};
 
 	public MenuBarListener(SpreadStage stage) {
 		this.stage = stage;
@@ -81,23 +85,66 @@ public class MenuBarListener implements ActionListener {
 			BinPack bp = new BinPack();
 			ArrayList<Double>[] bins = bp.doProcess(stage.data, list_size - 7);
 
-			int cnt = 0;
+			int cuttedCnt = 0;
+			int binLen = 0;
 			for (int i = 0; i < bins.length; i++) {
 				if (bins[i] == null)
 					break;
-				cnt++;
+				cuttedCnt += bins[i].size();
+				binLen++;
 			}
 
-			String[][] data = new String[cnt][];
-			for (int i = 0; i < cnt; i++) {
-				data[i] = new String[bins[i].size()];
+//			System.out.println(cnt);
+			String[][] data = new String[cuttedCnt][2];
+			int cnt = 0;
+
+			for (int i = 0; i < binLen; i++) {
 				for (int j = 0; j < bins[i].size(); j++) {
-					data[i][j] = bins[i].get(j) + "";
+					if (j == 0)
+						data[cnt][0] = (i + 1) + "번 남는 길이";
+					if (j == 1)
+						data[cnt][0] = "자를 길이";
+					if (j >= 2)
+						data[cnt][0] = "";
+					data[cnt][1] = bins[i].get(j) + "";
+					cnt++;
 				}
 			}
 
-			//엑셀 파일로 저장
-			System.out.println("괜춘?");
+			for (int i = 0; i < cnt; i++) {
+				for (int j = 0; j < 2; j++) {
+					System.out.print(data[i][j] + " ");
+				}
+				System.out.println();
+			}
+
+			// 엑셀 파일로 저장
+			JFrame jf = new JFrame("결과");
+			jf.setSize(600, 450);
+			jf.setLocation(300, 100);
+			contentPane = jf.getContentPane();
+
+			String[] colNames = { "No.", "규격(L=mm)" };
+
+			System.out.println(Arrays.toString(colNames));
+
+			table = new JTable(data, colNames);
+			table.setRowHeight(20);
+			JScrollPane scrollPane = new JScrollPane(table);
+			contentPane.add(scrollPane, BorderLayout.CENTER);
+			
+//			MenuBar mb = new MenuBar();
+//			Menu mFile = new Menu("File");
+//			MenuItem mSave = new MenuItem("Save");
+//			MenuItem mExit = new MenuItem("Exit");
+//			
+//			mFile.add(mSave);
+//			mFile.addSeparator();
+//			mFile.add(mExit);
+//			
+//			jf.setMenuBar(mb);
+			
+			jf.setVisible(true);
 		}
 	}
 }
