@@ -1,17 +1,14 @@
 package spreadsheet.algo;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.StringTokenizer;
 
 public class BinPack {
 	static double SIZE = 6000;
 
-	public ArrayList<Double>[] doProcess(Object data[][], int size) {
+	public ArrayList<Double>[] doProcess(Object data[][], int size, int targetSize) {
 		
+		SIZE = targetSize;
 		ArrayList<Node> list = new ArrayList<>();
 		int bins_cnt = 0;
 		String tempinput;
@@ -36,9 +33,6 @@ public class BinPack {
 					return 0;
 			}
 		});// 내림차순 정렬
-		
-//		for(Node n : list) 
-//			System.out.println(n.len + " " + n.cnt);
 
 		ArrayList<Double>[] bins = new ArrayList[bins_cnt];// 통
 		bins[0] = new ArrayList<>();// 첫 번째 통은 먼저 만들어 준다.
@@ -70,18 +64,6 @@ public class BinPack {
 				}
 			}
 		}
-//		for (int i = 0; i < bins.length; i++) {
-//			if (bins[i] == null)
-//				break;
-//			System.out.print(i + ": " + "남은 길이: " + bins[i].get(0) + ", ");
-//
-//			for (int j = 1; j < bins[i].size(); j++) // j==0은 남은 길이
-//			{
-//				System.out.print(bins[i].get(j) + " ");
-//			}
-//			System.out.println();
-//		}
-		
 		return bins; 
 	}
 

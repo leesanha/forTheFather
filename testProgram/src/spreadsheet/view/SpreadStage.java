@@ -33,10 +33,8 @@ public class SpreadStage extends JFrame {
 	public MenuBar mb;
 
 	public Menu mFile;
-	public Menu mHelp;
 	public Menu mProcess;
 
-	public MenuItem mNew;
 	public MenuItem mOpen;
 	public MenuItem mExit;
 	public MenuItem mCutting;
@@ -46,7 +44,7 @@ public class SpreadStage extends JFrame {
 
 	public SpreadStage(String title) {
 		super(title);
-		this.setSize(600, 450);
+		this.setSize(800, 600);
 		this.setLocation(300, 100);
 		initMenuBar();
 		initBody();
@@ -59,15 +57,12 @@ public class SpreadStage extends JFrame {
 		mb = new MenuBar();
 
 		mFile = new Menu("File");
-		mHelp = new Menu("Help");
 		mProcess = new Menu("Process");
 
-		mNew = new MenuItem("New");
 		mOpen = new MenuItem("Open");
 		mExit = new MenuItem("Exit");
 		mCutting = new MenuItem("Cutting");
 
-		mFile.add(mNew);
 		mFile.add(mOpen);
 		mFile.addSeparator(); // 메뉴구분선
 		mFile.add(mExit);
@@ -75,7 +70,6 @@ public class SpreadStage extends JFrame {
 		mProcess.add(mCutting);
 
 		mb.add(mFile);
-		mb.setHelpMenu(mHelp);
 		mb.add(mProcess);
 		this.setMenuBar(mb);
 

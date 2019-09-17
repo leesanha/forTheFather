@@ -55,18 +55,15 @@ public class ExcelManagerXLS {
 
 //첫번째 시트를 읽음
 		HSSFSheet sheet = workbook.getSheetAt(0);
-//		System.out.println(sheet.getLastRowNum());
 		for (int i = 0; i <= sheet.getLastRowNum(); i++) {
 			list.add(readCellData(sheet.getRow(i)));
 		}
-//		System.out.println(list);
 		return list;
 	}
 
 	private HashMap<String, String> readCellData(HSSFRow row) {
 		HashMap<String, String> hMap = new HashMap<String, String>();
 		int maxNum = row.getLastCellNum();
-//		System.out.println(maxNum);
 		for (int i = 0; i < maxNum; i++) {
 			hMap.put("attr" + i, getStringCellData(row.getCell((short) i)));
 		}
@@ -75,46 +72,30 @@ public class ExcelManagerXLS {
 
 	private String getStringCellData(HSSFCell cell) {
 		DecimalFormat df = new DecimalFormat();
-//		HSSFFormulaEvaluator evaluator = new HSSFWorkbook().getCreationHelper().createFormulaEvaluator();
-		
+		/*
+		 * HSSFCell.CELL_TYPE_BOOLEAN => 이렇게 사용
+		 * BOOLEAN => 이렇게 사용
+		*/		
 		if (cell != null) {
 			String data = null;
-//			System.out.println(cell.getCellType());
 			switch (cell.getCellType()) {
-			case HSSFCell.CELL_TYPE_BOOLEAN:
+			case BOOLEAN:
 				boolean bdata = cell.getBooleanCellValue();
 				data = String.valueOf(bdata);
 				break;
-			case HSSFCell.CELL_TYPE_NUMERIC:
-//				if (HSSFDateUtil.isCellDateFormatted(cell)) {
-////					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//					data = formatter.format(cell.getDateCellValue());
-//				} else {
-					double ddata = cell.getNumericCellValue();
-					data = df.format(ddata);
-//				}
+			case NUMERIC:
+				double ddata = cell.getNumericCellValue();
+				data = df.format(ddata);
 				break;
-			case HSSFCell.CELL_TYPE_STRING:
+			case STRING:
 				data = cell.toString();
 				break;
-			case HSSFCell.CELL_TYPE_BLANK:
-			case HSSFCell.CELL_TYPE_ERROR:
-			case HSSFCell.CELL_TYPE_FORMULA:
+			case BLANK:
+			case ERROR:
+			case FORMULA:
 				if (!(cell.toString() == "")) {
-//					if (evaluator.evaluateFormulaCell(cell) == CellType.NUMERIC) {
-
-						double fddata = cell.getNumericCellValue();
-						data = df.format(fddata);
-//					} else if (evaluator.evaluateFormulaCell(cell) ==
-
-//							CellType.STRING) {
-//						data = cell.getStringCellValue();
-//					} else if (evaluator.evaluateFormulaCell(cell) ==
-
-//							CellType.BOOLEAN) {
-//						boolean fbdata = cell.getBooleanCellValue();
-//						data = String.valueOf(fbdata);
-//					}
+					double fddata = cell.getNumericCellValue();
+					data = df.format(fddata);
 					break;
 				}
 			default:

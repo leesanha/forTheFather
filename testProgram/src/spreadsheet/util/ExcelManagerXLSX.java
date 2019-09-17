@@ -77,7 +77,6 @@ public class ExcelManagerXLSX {
 
 	private String getStringCellData(XSSFCell xssfCell) {
 		DecimalFormat df = new DecimalFormat();
-//		XSSFFormulaEvaluator evaluator = new XSSFWorkbook().getCreationHelper().createFormulaEvaluator();
 		if (xssfCell != null) {
 			String data = null;
 			switch (xssfCell.getCellType()) {
@@ -86,13 +85,8 @@ public class ExcelManagerXLSX {
 				data = String.valueOf(bdata);
 				break;
 			case NUMERIC:
-//				if (XSSFDateUtil.isCellDateFormatted(xssfCell)) {
-//					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//					data = formatter.format(xssfCell.getDateCellValue());
-//				} else {
-					double ddata = xssfCell.getNumericCellValue();
-					data = df.format(ddata);
-//				}
+				double ddata = xssfCell.getNumericCellValue();
+				data = df.format(ddata);
 				break;
 			case STRING:
 				data = xssfCell.toString();
@@ -101,20 +95,8 @@ public class ExcelManagerXLSX {
 			case ERROR:
 			case FORMULA:
 				if (!(xssfCell.toString() == "")) {
-//					if (evaluator.evaluateFormulaCell(xssfCell) == CellType.NUMERIC) {
-
-						double fddata = xssfCell.getNumericCellValue();
-						data = df.format(fddata);
-//					} else if (evaluator.evaluateFormulaCell(xssfCell) ==
-
-//							CellType.STRING) {
-//						data = xssfCell.getStringCellValue();
-//					} else if (evaluator.evaluateFormulaCell(xssfCell) ==
-
-//							CellType.BOOLEAN) {
-//						boolean fbdata = xssfCell.getBooleanCellValue();
-//						data = String.valueOf(fbdata);
-//					}
+					double fddata = xssfCell.getNumericCellValue();
+					data = df.format(fddata);
 					break;
 				}
 			default:
